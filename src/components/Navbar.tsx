@@ -82,7 +82,7 @@ const Navbar = () => {
               <option value="usd" className="">
                 USD
               </option>
-            </select>
+            </select> 
           </li>
           <li>
             <Link

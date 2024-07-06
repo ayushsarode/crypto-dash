@@ -9,7 +9,6 @@ export default function Page() {
   return (
     <main className="bg-black min-h-screen">
       <Home />
-      <CryptoTracker/>
     </main>
   );
 }

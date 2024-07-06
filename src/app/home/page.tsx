@@ -1,8 +1,8 @@
 import React from "react";
-import RootLayout from "../layout";
 import poppins from "@/Styles/Fonts/font";
+import CryptoTracker from "@/components/CryptoList";
 
-function Home() {
+const Home: React.FC = () => {
   return (
     <div className={poppins.className}>
       <div className="hero mt-[5rem] mb-1">
@@ -16,13 +16,13 @@ function Home() {
               Welcome to the ultimate platform for real-time cryptocurrency
               tracking.
             </p>
- 
           </div>
-          
         </div>
-          </div>
+      </div>
+
+        <CryptoTracker/>
     </div>
   );
-}
+};
 
 export default Home;

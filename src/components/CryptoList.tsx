@@ -1,30 +1,47 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import Link from "next/link";
+'use client';
 
-const CryptoTracker = () => {
-  const [data, setData] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [showMore, setShowMore] = useState(false);
+import React, { useState, useEffect, ChangeEvent } from 'react';
+import axios from 'axios';
+import Link from 'next/link';
+import { FaChevronDown } from "react-icons/fa";
+import { FaAngleUp } from "react-icons/fa";
 
-  const initialRowCount = 10; 
+
+interface CryptoData {
+  id: string;
+  name: string;
+  symbol: string;
+  current_price: number;
+  market_cap: number;
+  price_change_percentage_1h_in_currency: number ;
+  price_change_percentage_24h_in_currency: number ;
+  price_change_percentage_7d_in_currency: number;
+  image: string;
+}
+
+const CryptoTracker: React.FC = () => {
+  const [data, setData] = useState<CryptoData[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [showMore, setShowMore] = useState<boolean>(false);
+
+  const initialRowCount = 10;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "https://api.coingecko.com/api/v3/coins/markets?vs_currency=inr&order=market_cap_desc&per_page=100&page=1&sparkline=false&price_change_percentage=1h%2C24h%2C7d"
+        const response = await axios.get<CryptoData[]>(
+          'https://api.coingecko.com/api/v3/coins/markets?vs_currency=inr&order=market_cap_desc&per_page=100&page=1&sparkline=false&price_change_percentage=1h%2C24h%2C7d'
         );
         setData(response.data);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error('Error fetching data:', error);
       }
     };
+
     fetchData();
   }, []);
 
-  const handleSearchChange = (event) => {
+  const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
   };
 
@@ -38,7 +55,7 @@ const CryptoTracker = () => {
 
   return (
     <>
-      <div className="mx-auto text-center bg-black">
+      <div className="mx-auto text-center ">
         <input
           type="text"
           placeholder="Search Crypto"
@@ -56,8 +73,8 @@ const CryptoTracker = () => {
                 <th className="bg-black">Symbol</th>
                 <th className="bg-black">Price</th>
                 <th className="bg-black">Market Cap</th>
-                <th className="bg-black">1h change</th>
-                <th className="bg-black">1D change</th>
+                <th className="bg-black">1h Change</th>
+                <th className="bg-black">1D Change</th>
                 <th className="bg-black">7D Change</th>
               </tr>
             </thead>
@@ -69,56 +86,44 @@ const CryptoTracker = () => {
                       src={crypto.image}
                       alt={crypto.name}
                       className="rounded-circle mr-2"
-                      style={{ width: "30px", height: "30px" }}
+                      style={{ width: '30px', height: '30px' }}
                     />
                     <Link
                       href={`/crypto/${crypto.id}`}
-                      style={{ textDecoration: "none", color: "inherit" }}
+                      style={{ textDecoration: 'none', color: 'inherit' }}
                     >
                       {crypto.name}
                     </Link>
                   </td>
                   <td>{crypto.symbol.toUpperCase()}</td>
                   <td>₹{crypto.current_price.toFixed(2)}</td>
-                  <td>₹{crypto.market_cap.toLocaleString("en-US")}</td>
+                  <td>₹{crypto.market_cap.toLocaleString('en-IN')}</td>
                   <td
                     style={{
-                      color:
-                        crypto.price_change_percentage_1h_in_currency < 0
-                          ? "red"
-                          : "green",
+                      color: crypto.price_change_percentage_1h_in_currency < 0 ? 'red' : 'green',
                     }}
                   >
-                    {Number(
-                      crypto.price_change_percentage_1h_in_currency
-                    ).toFixed(2)}
-                    %
+                    {crypto.price_change_percentage_1h_in_currency !== null
+                      ? `${crypto.price_change_percentage_1h_in_currency.toFixed(2)}%`
+                      : 'N/A'}
                   </td>
                   <td
                     style={{
-                      color:
-                        crypto.price_change_percentage_24h_in_currency < 0
-                          ? "red"
-                          : "green",
+                      color: crypto.price_change_percentage_24h_in_currency < 0 ? 'red' : 'green',
                     }}
                   >
-                    {Number(
-                      crypto.price_change_percentage_24h_in_currency
-                    ).toFixed(2)}
-                    %
+                    {crypto.price_change_percentage_24h_in_currency !== null
+                      ? `${crypto.price_change_percentage_24h_in_currency.toFixed(2)}%`
+                      : 'N/A'}
                   </td>
                   <td
                     style={{
-                      color:
-                        crypto.price_change_percentage_7d_in_currency < 0
-                          ? "red"
-                          : "green",
+                      color: crypto.price_change_percentage_7d_in_currency <  0 ? 'red' : 'green',
                     }}
                   >
-                    {Number(
-                      crypto.price_change_percentage_7d_in_currency
-                    ).toFixed(2)}
-                    %
+                    {crypto.price_change_percentage_7d_in_currency !== null
+                      ? `${crypto.price_change_percentage_7d_in_currency.toFixed(2)}%`
+                      : 'N/A'}
                   </td>
                 </tr>
               ))}
@@ -126,16 +131,17 @@ const CryptoTracker = () => {
           </table>
           {filteredData.length > initialRowCount && (
             <div className="text-center mt-4">
-              <button
-                className="btn btn-primary"
-                onClick={toggleShowMore}
-              >
-                {showMore ? "View Less" : "View More"}
+              <button className="" onClick={toggleShowMore}>
+
+                {showMore ? <FaAngleUp/> : <FaChevronDown/>}
+
               </button>
+
             </div>
           )}
         </div>
       </div>
+
     </>
   );
 };
