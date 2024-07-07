@@ -21,6 +21,18 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/context/CoinContext.jsx", "src/components/Navbar.tsx", "src/app/page.tsx", "src/app/layout.tsx", "src/app/coin/page.jsx", "src/app/coin/[coinId]/page.tsx", "src/app/home/page.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/context/CoinContext.jsx",
+    "src/components/Navbar.tsx",
+    "src/app/page.tsx",
+    "src/app/layout.tsx",
+    "src/app/coin/page.jsx",
+    "src/app/coin/[id]/page.tsx",
+    "src/app/home/page.tsx"
+  ],
   "exclude": ["node_modules"]
 }
