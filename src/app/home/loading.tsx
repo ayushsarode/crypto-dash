@@ -1,7 +1,7 @@
 function Loading() {
   return (
     <div>
-      Loading
+      <span className="loading loading-dots loading-lg"></span>
     </div>
   )
 }

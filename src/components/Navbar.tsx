@@ -8,7 +8,6 @@ const Navbar = () => {
   return (
     
     <div className="navbar  shadow-[0_1px_0_0_rgba(255,255,255,0.4)] border-white">
-      
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">

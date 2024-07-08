@@ -19,7 +19,6 @@ const Home: React.FC = () => {
           </div>
         </div>
       </div>
-
         <CryptoTracker/>
     </div>
   );

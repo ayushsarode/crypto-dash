@@ -1,3 +1,4 @@
+
 // pages/coin/[id].tsx
 "use client";
 import { useEffect, useState } from "react";
@@ -28,7 +29,9 @@ const Coin = ({ params }: any) => {
   }, [id]);
 
   if (error) return <div>{error}</div>;
-  if (!coinData) return <div>Loading...</div>;
+  if (!coinData) return <div className="flex items-center justify-center h-screen ">
+  <span className="loading loading-dots loading-lg mb-10"></span>
+</div>;
 
   return (
     <>
@@ -38,7 +41,7 @@ const Coin = ({ params }: any) => {
             src={coinData.image.small}
             className="card-img-top img-fluid"
             alt=""
-            style={{ maxWidth: "200px" }}
+            style={{ maxWidth: "100px" }}
           />
           <div className="card-body">
             <h1 className="card-title">{coinData.name}</h1>
