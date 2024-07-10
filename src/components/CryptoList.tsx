@@ -40,14 +40,7 @@ const CryptoTracker: React.FC = () => {
           page: 1,
           sparkline: false,
           price_change_percentage: "1h,24h,7d",
-        },
-        headers: {
-          method: "GET",
-          headers: {
-            accept: "application/json",
-            "x-cg-demo-api-key": apiKey,
-          },
-        },
+        }
       });
 
       setData(response.data as CryptoData[]);
