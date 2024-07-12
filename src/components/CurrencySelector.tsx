@@ -6,7 +6,7 @@ interface CurrencySelectorProps {
 const CurrencySelector: React.FC<CurrencySelectorProps> = ({ currency, onCurrencyChange }) => {
   return (
     <select
-      className="btn btn-outline hover:bg-white"
+      className="btn btn-outline border-white border-2 hover:bg-white"
       value={currency}
       onChange={(e) => onCurrencyChange(e.target.value)}
     >

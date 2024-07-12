@@ -1,6 +1,7 @@
 import React from "react";
 import poppins from "@/Styles/Fonts/font";
 import CryptoTracker from "@/components/CryptoList";
+import { GradientText } from "@/components/ui/Gradient-ui";
 
 const Home: React.FC = () => {
   return (
