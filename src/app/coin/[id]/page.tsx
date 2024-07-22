@@ -2,10 +2,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import axios from "axios";
-import { truncateText } from "@/utils/truncate";
+import { truncateText } from "../../../lib/truncate";
 import DOMPurify from "dompurify";
 import LineGraph from "@/components/LineGraph";
 import { Days } from "@/components/Days";
+import { Card } from "@nextui-org/react";
 
 const Coin = ({ params }: any) => {
   const [coinData, setCoinData] = useState<any>(null);
@@ -28,15 +29,17 @@ const Coin = ({ params }: any) => {
 
   // HistoricalData for dynamic coins
   const fetchHistoricalData = async () => {
-    const options = { method: "GET", headers: { accept: "application/json" } };
-
-    fetch(
-      `https://api.coingecko.com/api/v3/coins/${Coinid}/market_chart?vs_currency=USD&days=${days}`,
-      options
-    )
-      .then((response) => response.json())
-      .then((response) => setHistoricalData(response))
-      .catch((err) => console.error(err));
+    try {
+      const response = await axios.get(
+        `https://api.coingecko.com/api/v3/coins/${Coinid}/market_chart?vs_currency=USD&days=365`,
+        {
+          headers: { accept: "application/json" },
+        }
+      );
+      setHistoricalData(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   // fetching dynamic Coin
@@ -65,13 +68,13 @@ const Coin = ({ params }: any) => {
   if (coinData && historicalData) {
     return (
       <>
-        <div className="card card-side bg-base-100 shadow-xl max-w-[900px] mt-10 max-h-[600px]">
+        <div className="card card-side mx-auto bg-gray-900  shadow-xl max-w-[900px] mt-10 max-h-600px] ">
           <figure className="w-[500px]">
             <img
               src={coinData.image.large}
               className="card-img-top img-fluid"
               alt=""
-              style={{ maxWidth: "300px" }}
+              style={{ maxWidth: "100px" }}
             />
           </figure>
           <div className="card-body max-w-[700px]">
@@ -97,17 +100,16 @@ const Coin = ({ params }: any) => {
               </span>
             )}
             <div>
-              
               {Days.map((day) => (
                 <button
-                  className={`w-24 ml-6 h-10 mb-10  rounded  ${
+                  className={`w-24 ml-6 h-10 mb-10 rounded ${
                     days != day.value
                       ? "border-[2px] border-accent text-white"
                       : "bg-accent text-black"
                   }`}
                   key={day.value}
                   onClick={() => {
-                    setDays(day.value); 
+                    setDays(day.value);
                   }}
                 >
                   {day.label}

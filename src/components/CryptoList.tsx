@@ -33,6 +33,7 @@ const CryptoTracker: React.FC = () => {
   const fetchData = async (currency: string) => {
     try {
       const response = await axios.get<CryptoData[]>(apiUrl, {
+        mode: 'no-cors',
         params: {
           vs_currency: currency,
           order: "market_cap_desc",
@@ -77,7 +78,8 @@ const CryptoTracker: React.FC = () => {
 
   return (
     <>
-      <div className="mx-auto text-center">
+    <div>
+      <div className="mx-auto text-center z">
         <input
           type="text"
           placeholder="Search Crypto"
@@ -188,6 +190,7 @@ const CryptoTracker: React.FC = () => {
             </div>
           )}
         </div>
+      </div>
       </div>
     </>
   );

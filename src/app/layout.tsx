@@ -3,6 +3,7 @@ import "./globals.css";
 import { Roboto } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import React, { ReactNode } from "react";
+import poppins from "@/Styles/Fonts/font";
 
 const inter = Inter({ subsets: ["latin"] });
 const roboto = Roboto({
@@ -21,9 +22,11 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
+
     <>
+
       <html lang="en" className="bg-black">
-        <body className={roboto.className} suppressHydrationWarning={true}>
+        <body className={poppins.className} suppressHydrationWarning={true}>
           <div className="p-0 m-0 min-h-screen">
             <Navbar />
             {children}

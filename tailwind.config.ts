@@ -15,6 +15,25 @@ const config: Config = {
         custom4: '#232526',
         custom5: '#414345',
       },
+      backgroundSize: {
+        '200%': '200%',
+      },
+      animation: {
+        'gradient-x': 'gradient-x 4s ease infinite',
+      },
+      keyframes: {
+        'gradient-x': {
+          '0%': {
+            'background-position': '0% 50%',
+          },
+          '50%': {
+            'background-position': '100% 50%',
+          },
+          '100%': {
+            'background-position': '0% 50%',
+          },
+        },
+      },
     },
   },
   plugins: [
