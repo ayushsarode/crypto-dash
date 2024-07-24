@@ -6,7 +6,7 @@ function BackBtn() {
   return (
     <div className='hover:text-[1.2rem]'>
 
-              <Link href={"/"} className="btn btn-ghost text-[1rem] font-extralight text-white border-white hover:border-white hover:bg-black ">
+              <Link href={"/"} className="btn btn-ghost text-[.9rem] font-extralight text-white border-white hover:border-white hover:bg-black ">
           <FaArrowLeft  className="text-md" />
           Go back
         </Link>

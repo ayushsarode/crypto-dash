@@ -28,7 +28,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <div className={`navbar shadow-[0_1px_0_0_rgba(255,255,255,0.3)] border-white ${isScrolled ? 'backdrop-blur-lg' : ''} sticky top-0 z-50`}>
+    <div className={`navbar  shadow-[0_1px_0_0_rgba(255,255,255,0.3)] border-white ${isScrolled ? 'backdrop-blur-lg' : ''} sticky top-0 z-50`}>
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -96,7 +96,7 @@ const Navbar = () => {
           <li>
             <Link
               href={"#"}
-              className="btn rounded-full px-6 bg-white text-black text-[1rem] hover:bg-white "
+              className="btn rounded-full px-5 bg-white text-black text-[1rem] hover:bg-white "
             >
               Sign Up <FaUserPlus />
             </Link>

@@ -6,19 +6,23 @@ import { GradientText } from "@/components/ui/Gradient-ui";
 import { RiCopperCoinLine } from "react-icons/ri";
 import { Vortex } from "@/components/ui/vortex";
 
+
+
+
 const Home: React.FC = () => {
+
   return (
     <div className={poppins.className}>
       <div>
         <div className="hero  mb-1 overflow-hidden">
           <div className="hero-content text-center">
-            <Vortex
+            {/* <Vortex
               backgroundColor="black"
               rangeY={800}
               particleCount={100}
               baseHue={250}
               className="flex items-center flex-col justify-center px-2 md:px-10  py-4 w-full h-full"
-            >
+            > */}
               <div className="max-w-md mt-[4rem]">
                 <h1 className="text-5xl font-bold whitespace-nowrap mb-4 text-white">
                   Track
@@ -33,7 +37,7 @@ const Home: React.FC = () => {
                   tracking.
                 </p>
               </div>
-            </Vortex>
+            {/* </Vortex> */}
           </div>
         </div>
         <CryptoTracker />
