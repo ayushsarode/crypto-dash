@@ -49,8 +49,10 @@ const CryptoTracker: React.FC = () => {
 
       setData(response.data as CryptoData[]);
       setLoading(false);
-    } catch (error) {
-      console.error("Error fetching data:", error);
+    } catch (error) { 
+      console.error("Error fetching data:", error); 
+    } finally {
+      setLoading(false)
     }
   };
 
@@ -93,10 +95,16 @@ const CryptoTracker: React.FC = () => {
     setCurrency(currency);
   };
 
+  if (loading) {
+    return (<div className="flex items-start justify-center h-screen ">
+      <span className="loading loading-dots loading-lg mb-10"></span>
+    </div>);
+  }
+
   return (
     <>
       <div>
-        <div className="mx-auto text-center">
+        <div className="mx-auto text-center w-full">
           <input
             type="text"
             placeholder="Search Crypto"
@@ -111,10 +119,10 @@ const CryptoTracker: React.FC = () => {
           />
         </div>
 
-        <div className="container m-auto mb-0">
+        <div className="container m-auto mb-0 ">
           <div className="m-5 pb-0 p-10">
-            <table className="table mb-0">
-              <thead className="bg-dark">
+            <table className="table mb-0 w-full overflow-scroll">
+              <thead className="bg-dark ">
                 <tr className="text-white">
                   <th className="bg-black">Name</th>
                   <th className="bg-black">Symbol</th>
@@ -202,17 +210,17 @@ const CryptoTracker: React.FC = () => {
 
             <div className="flex justify-between items-center mt-4">
               <button
-                className="btn btn-primary"
+                className="btn rounded-full"
                 onClick={handlePrevPage}
                 disabled={currentPage === 1}
               >
                 <FaChevronLeft />
               </button>
-              <span>
+              <span className="text-md">
                 Page {currentPage} of {totalPages}
               </span>
               <button
-                className="btn btn-primary"
+                className="btn rounded-full"
                 onClick={handleNextPage}
                 disabled={currentPage === totalPages}
               >

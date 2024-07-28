@@ -1,6 +1,9 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { MdArrowRightAlt } from "react-icons/md";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+import { LoginLink } from "@kinde-oss/kinde-auth-nextjs/components"
 
 interface ExchangeRate {
   name: string;
@@ -14,9 +17,10 @@ const ExchangeRates: React.FC = () => {
   const [fiatRates, setFiatRates] = useState<{ [key: string]: ExchangeRate }>({});
   const [loading, setLoading] = useState(true);
   const [amount, setAmount] = useState(1);
-  const [fromCurrency, setFromCurrency] = useState('btc'); // Default to Bitcoin
-  const [toCurrency, setToCurrency] = useState('usd'); // Default to US Dollar
+  const [fromCurrency, setFromCurrency] = useState('btc');
+  const [toCurrency, setToCurrency] = useState('usd'); 
   const [convertedAmount, setConvertedAmount] = useState(0);
+  const { isAuthenticated, isLoading } = useKindeBrowserClient();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -74,54 +78,79 @@ const ExchangeRates: React.FC = () => {
     </div>);
   }
 
-  return (
-    <div className="max-w-md mx-auto mt-10 p-4 bg-white shadow-lg rounded-lg">
-      <h1 className="text-2xl font-bold mb-4 text-center">Currency Converter</h1>
-      <div className="flex flex-col items-center space-y-4">
+  return  isAuthenticated ? (
+    <div className='mt-[7rem]'>
+<div className="max-w-xl flex items-center justify-center mx-auto  p-6 bg-slate-950 shadow-lg rounded-lg h-[25rem] ">
+  <div className='items-center'>
+  <h1 className="text-2xl font-bold mb-6 text-center text-white">Currency Converter</h1>
+  <div className="space-y-6">
+    <div className="space-y-4">
+      <div className="flex items-center space-x-4">
+        <label className="text-white w-16">From:</label>
+        <select 
+          value={fromCurrency} 
+          onChange={handleFromCurrencyChange} 
+          className="p-2 rounded bg-gray-700 text-white flex-grow"
+        >
+          {Object.keys(cryptoRates).map((key) => (
+            <option key={key} value={key}>
+              {cryptoRates[key].name} ({cryptoRates[key].unit})
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="flex items-center space-x-4">
+        <label className="text-white w-16">Amount:</label>
         <input 
           type="number" 
           value={amount} 
           onChange={handleAmountChange} 
-          className="w-full p-2 border border-gray-300 rounded"
+          className="p-2 rounded bg-gray-700 text-white flex-grow"
           min="0"
+          placeholder="Enter amount"
         />
-        <div className="flex items-center space-x-2">
-          <select 
-            value={fromCurrency} 
-            onChange={handleFromCurrencyChange} 
-            className="p-2 border border-gray-300 rounded"
-          >
-            {Object.keys(cryptoRates).map((key) => (
-              <option key={key} value={key}>
-                {cryptoRates[key].name} ({cryptoRates[key].unit})
-              </option>
-            ))}
-          </select>
-          <span className="text-xl">to</span>
-          <select 
-            value={toCurrency} 
-            onChange={handleToCurrencyChange} 
-            className="p-2 border border-gray-300 rounded"
-          >
-            {Object.keys(fiatRates).map((key) => (
-              <option key={key} value={key}>
-                {fiatRates[key].name} ({fiatRates[key].unit})
-              </option>
-            ))}
-          </select>
-        </div>
       </div>
-      <div className="mt-4 text-center">
-        <h2 className="text-xl font-semibold">
-          {amount > 0 ? (
-            <>
-              {amount} {cryptoRates[fromCurrency].unit} = {convertedAmount.toFixed(2)} {fiatRates[toCurrency].unit}
-            </>
-          ) : (
-            'Please enter an amount greater than zero'
-          )}
-        </h2>
+      <div className="flex justify-center text-white text-4xl">
+  <MdArrowRightAlt />
+</div>
+      <div className="flex items-center space-x-4">
+        <label className="text-white w-16">To:</label>
+        <select 
+          value={toCurrency} 
+          onChange={handleToCurrencyChange} 
+          className="p-2 rounded bg-gray-700 text-white flex-grow"
+        >
+          {Object.keys(fiatRates).map((key) => (
+            <option key={key} value={key} className='h-[10rem]'>
+              {fiatRates[key].name} ({fiatRates[key].unit})
+            </option>
+          ))}
+        </select>
       </div>
+    </div>
+    <div className="text-center mt-6">
+      <h2 className="text-xl font-semibold text-white">
+        {amount > 0 ? (
+          <>
+            {amount} {cryptoRates[fromCurrency].unit} = 
+            {convertedAmount.toFixed(2)} {fiatRates[toCurrency].unit}
+          </>
+        ) : (
+          <>
+          "Please enter an amount"
+          </>
+        )}
+      </h2>
+    </div>
+  </div>
+  </div>
+</div>
+</div>
+
+
+  ): (
+    <div className="flex justify-center items-center h-[80vh]">
+      You have to  <span className="text-blue-700 font-underline underline mx-1"><LoginLink> Login </LoginLink></span> to see this page
     </div>
   );
 };

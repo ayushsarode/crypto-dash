@@ -32,7 +32,9 @@
     "src/app/layout.tsx",
     "src/app/coin/page.jsx",
     "src/app/coin/[id]/page.tsx",
-    "src/app/home/page.tsx"
+    "src/app/home/page.tsx",
+    "src/app/api/auth/[kindeAuth]/route.ts",
+    "src/app/auth.js"
   ],
   "exclude": ["node_modules"]
 }

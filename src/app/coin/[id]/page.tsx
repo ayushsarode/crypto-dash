@@ -7,6 +7,9 @@ import DOMPurify from "dompurify";
 import LineGraph from "@/components/LineGraph";
 import { Days } from "@/components/Days";
 import { Card } from "@nextui-org/react";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+import { LoginLink } from "@kinde-oss/kinde-auth-nextjs/components";
+
 
 const Coin = ({ params }: any) => {
   const [coinData, setCoinData] = useState<any>(null);
@@ -15,6 +18,7 @@ const Coin = ({ params }: any) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [days, setDays] = useState(10);
   const Coinid = params.id;
+  const { isAuthenticated, isLoading } = useKindeBrowserClient();
 
   const fetchCoinData = async () => {
     try {
@@ -27,7 +31,7 @@ const Coin = ({ params }: any) => {
     }
   };
 
-  // HistoricalData for dynamic coins
+
   const fetchHistoricalData = async () => {
     try {
       const response = await axios.get(
@@ -42,7 +46,6 @@ const Coin = ({ params }: any) => {
     }
   };
 
-  // fetching dynamic Coin
   useEffect(() => {
     if (Coinid) {
       fetchCoinData();
@@ -58,7 +61,7 @@ const Coin = ({ params }: any) => {
       </div>
     );
 
-  // for read more/less function
+
   const description = coinData?.description?.en || "";
   const truncatedDescription = truncateText(description, 60);
   const handleToggle = () => {
@@ -66,7 +69,7 @@ const Coin = ({ params }: any) => {
   };
 
   if (coinData && historicalData) {
-    return (
+    return isAuthenticated ?(
       <>
         <div className="card card-side mx-auto bg-gray-900  shadow-xl max-w-[900px] mt-10 max-h-600px] ">
           <figure className="w-[500px]">
@@ -122,9 +125,11 @@ const Coin = ({ params }: any) => {
           </div>
         </div>
       </>
+    ): (
+      <div className="flex justify-center items-center h-[80vh]">
+        You have to  <span className="text-blue-700 font-underline underline mx-1"><LoginLink> Login </LoginLink></span> to see this page
+      </div>
     );
-  } else {
-  }
-};
+  }}
 
-export default Coin;
+export default Coin
