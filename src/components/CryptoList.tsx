@@ -20,6 +20,7 @@ export interface CryptoData {
   price_change_percentage_24h: number;
   price_change_percentage_7d_in_currency: number;
   image: string;
+  
 }
 
 const CryptoTracker: React.FC = () => {
@@ -30,13 +31,12 @@ const CryptoTracker: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [itemsPerPage] = useState<number>(7);
 
-  const apiKey = process.env.NEXT_PUBLIC_CG_API_KEY;
-  const apiUrl = process.env.NEXT_PUBLIC_CRYPTO_API_URL;
+  const apiUrl = process.env.NEXT_PUBLIC_CRYPTO_API_URL || 'https://api.coingecko.com/api/v3/coins/markets';
+
 
   const fetchData = async (currency: string) => {
     try {
       const response = await axios.get<CryptoData[]>(apiUrl, {
-        mode: 'no-cors',
         params: {
           vs_currency: currency,
           order: "market_cap_desc",
