@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useParams } from "next/navigation";
 import axios from "axios";
 import { truncateText } from "../../../lib/truncate";
@@ -9,7 +9,7 @@ import { Days } from "@/components/Days";
 import { Card } from "@nextui-org/react";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { LoginLink } from "@kinde-oss/kinde-auth-nextjs/components";
-
+import Image from "next/image";
 
 const Coin = ({ params }: any) => {
   const [coinData, setCoinData] = useState<any>(null);
@@ -20,38 +20,37 @@ const Coin = ({ params }: any) => {
   const Coinid = params.id;
   const { isAuthenticated, isLoading } = useKindeBrowserClient();
 
-  const fetchCoinData = async () => {
-    try {
-      const response = await axios.get(
-        `https://api.coingecko.com/api/v3/coins/${Coinid}`
-      );
-      setCoinData(response.data);
-    } catch (error) {
-      setError("Error loading data");
-    }
-  };
-
-
-  const fetchHistoricalData = async () => {
-    try {
-      const response = await axios.get(
-        `https://api.coingecko.com/api/v3/coins/${Coinid}/market_chart?vs_currency=USD&days=365`,
-        {
-          headers: { accept: "application/json" },
-        }
-      );
-      setHistoricalData(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
+    const fetchCoinData = async () => {
+      try {
+        const response = await axios.get(
+          `https://api.coingecko.com/api/v3/coins/${Coinid}`
+        );
+        setCoinData(response.data);
+      } catch (error) {
+        setError("Error loading data");
+      }
+    };
+
+    const fetchHistoricalData = async () => {
+      try {
+        const response = await axios.get(
+          `https://api.coingecko.com/api/v3/coins/${Coinid}/market_chart?vs_currency=USD&days=365`,
+          {
+            headers: { accept: "application/json" },
+          }
+        );
+        setHistoricalData(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     if (Coinid) {
       fetchCoinData();
+      fetchHistoricalData();
     }
-    fetchHistoricalData();
-  }, [Coinid, fetchCoinData, fetchHistoricalData]);
+  }, [Coinid]);
 
   if (error) return <div>{error}</div>;
   if (!coinData)
@@ -61,7 +60,6 @@ const Coin = ({ params }: any) => {
       </div>
     );
 
-
   const description = coinData?.description?.en || "";
   const truncatedDescription = truncateText(description, 60);
   const handleToggle = () => {
@@ -69,15 +67,16 @@ const Coin = ({ params }: any) => {
   };
 
   if (coinData && historicalData) {
-    return isAuthenticated ?(
+    return isAuthenticated ? (
       <>
-        <div className="card card-side mx-auto bg-gray-900  shadow-xl max-w-[900px] mt-10 max-h-600px] ">
+        <div className="card card-side mx-auto bg-gray-900 shadow-xl max-w-[900px] mt-10 max-h-[600px]">
           <figure className="w-[500px]">
-            <img
+            <Image
               src={coinData.image.large}
               className="card-img-top img-fluid"
-              alt=""
-              style={{ maxWidth: "100px" }}
+              alt={coinData.name}
+              width={100}
+              height={100}
             />
           </figure>
           <div className="card-body max-w-[700px]">
@@ -125,11 +124,16 @@ const Coin = ({ params }: any) => {
           </div>
         </div>
       </>
-    ): (
+    ) : (
       <div className="flex justify-center items-center h-[80vh]">
-        You have to  <span className="text-blue-700 font-underline underline mx-1"><LoginLink> Login </LoginLink></span> to see this page
+        You have to{" "}
+        <span className="text-blue-700 font-underline underline mx-1">
+          <LoginLink> Login </LoginLink>
+        </span>{" "}
+        to see this page
       </div>
     );
-  }}
+  }
+};
 
-export default Coin
+export default Coin;
