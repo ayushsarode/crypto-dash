@@ -1,12 +1,10 @@
 "use client";
 import { useEffect, useState, useCallback } from "react";
-import { useParams } from "next/navigation";
 import axios from "axios";
 import { truncateText } from "../../../lib/truncate";
 import DOMPurify from "dompurify";
 import LineGraph from "@/components/LineGraph";
 import { Days } from "@/components/Days";
-import { Card } from "@nextui-org/react";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { LoginLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import Image from "next/image";

@@ -1,11 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import poppins from "@/Styles/Fonts/font";
-import CryptoTracker from "@/components/CryptoList";
-import { GradientText } from "@/components/ui/Gradient-ui";
-import { RiCopperCoinLine } from "react-icons/ri";
-import { Vortex } from "@/components/ui/vortex";
-import { tree } from "next/dist/build/templates/app-page";
+import CryptoTracker from "@/components/CryptoList";;
+
 
 
 const Home: React.FC = () => {
