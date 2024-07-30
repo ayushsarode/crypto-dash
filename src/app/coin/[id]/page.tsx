@@ -51,7 +51,7 @@ const Coin = ({ params }: any) => {
       fetchCoinData();
     }
     fetchHistoricalData();
-  }, [Coinid]);
+  }, [Coinid, fetchCoinData, fetchHistoricalData]);
 
   if (error) return <div>{error}</div>;
   if (!coinData)
