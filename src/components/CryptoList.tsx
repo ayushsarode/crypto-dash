@@ -5,6 +5,7 @@ import axios from "axios";
 import Link from "next/link";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import CurrencySelector from "./CurrencySelector";
+import Image from "next/image";
 
 export interface CryptoData {
   large: string;
@@ -137,11 +138,12 @@ const CryptoTracker: React.FC = () => {
                 {currentItems.map((crypto) => (
                   <tr key={crypto.id}>
                     <td className="text-white">
-                      <img
+                      <Image
                         src={crypto.image}
                         alt={crypto.name}
                         className="rounded-circle mr-2"
-                        style={{ width: "30px", height: "30px" }}
+                        width={30}
+                        height={30}
                       />
                       <Link
                         href={`/coin/${crypto.id}`}

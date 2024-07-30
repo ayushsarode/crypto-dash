@@ -138,7 +138,7 @@ const ExchangeRates: React.FC = () => {
         ) : (
           <>
           <p>
-          "Please enter an amount"
+          Please enter an amount
           </p>
           </>
         )}

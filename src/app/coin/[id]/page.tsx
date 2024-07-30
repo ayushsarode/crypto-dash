@@ -31,7 +31,7 @@ const Coin = ({ params }: any) => {
         setError("Error loading data");
       }
     };
-
+    
     const fetchHistoricalData = async () => {
       try {
         const response = await axios.get(

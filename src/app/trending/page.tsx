@@ -4,7 +4,7 @@ import axios from "axios";
 import Link from "next/link";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { LoginLink } from "@kinde-oss/kinde-auth-nextjs/components";
-
+import Image from "next/image";
 
 interface CryptoData {
   large: string;
@@ -97,11 +97,12 @@ const TrendingPage: React.FC = () => {
             font-light">
               <td className="text-white px-4 py-2">{coin.score ?? "N/A"}</td>
               <td className="text-white px-4 py-2 flex items-center ">
-                <img
+                <Image
                   src={coin.large}
                   alt={coin.name}
                   className="rounded-circle mr-2"
-                  style={{ width: "30px", height: "30px" }}
+                  width={30}
+                  height={30}
                 />
                 <Link
                   href={`/coin/${coin.id}`}
