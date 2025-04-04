@@ -93,7 +93,7 @@ const Coin = ({ params }: any) => {
           let sampledData;
           if (formattedData.length > 100) {
             const step = Math.floor(formattedData.length / 100);
-            sampledData = formattedData.filter((_, i) => i % step === 0);
+            sampledData = formattedData.filter((_: any, i: number) => i % step === 0);
           } else {
             sampledData = formattedData;
           }
