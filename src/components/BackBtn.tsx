@@ -10,6 +10,7 @@ function BackBtn() {
           <FaArrowLeft  className="text-md" />
           Go back
         </Link>
+
     </div>
   )
 }

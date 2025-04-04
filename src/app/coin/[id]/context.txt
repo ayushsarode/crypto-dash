@@ -1,0 +1,53 @@
+          <figure className="w-[30px]">
+            <Image
+              src={coinData.image.large}
+              className="card-img-top img-fluid"
+              alt={coinData.name}
+              width={200}
+              height={200}
+            />
+          </figure>
+          <div className="card-body max-w-[700px]">
+            <div className="flex items-center gap-5">
+              <h1 className="card-title text-white">{coinData.name}</h1>
+              <p className="card-text font-bold text-white text-xl">
+                <b>Rank:</b> {coinData.market_cap_rank}
+              </p>
+            </div>
+            <div
+              className="prose"
+              dangerouslySetInnerHTML={{
+                __html: isExpanded
+                  ? DOMPurify.sanitize(description)
+                  : DOMPurify.sanitize(truncatedDescription),
+              }}
+            />
+            {description.split(" ").length > 30 && (
+              <span>
+                <button onClick={handleToggle}>
+                  {isExpanded ? "View Less" : "View More"}
+                </button>
+              </span>
+            )}
+
+            <div>
+              {Days.map((day) => (
+                <button
+                  className={`w-24 ml-6 h-10 mb-10 rounded ${
+                    days != day.value
+                      ? "border-[2px] border-accent text-white"
+                      : "bg-accent text-black"
+                  }`}
+                  key={day.value}
+                  onClick={() => {
+                    setDays(day.value);
+                  }}
+                >
+                  {day.label}
+                </button>
+              ))}
+            </div>
+            <div>
+              <LineGraph historicalData={historicalData} />
+            </div>
+          </div>

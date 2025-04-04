@@ -15,6 +15,9 @@ const config: Config = {
         custom4: '#232526',
         custom5: '#414345',
       },
+      fontFamily: {
+        roboto: ['Roboto', 'sans-serif'],
+      },
       backgroundSize: {
         '200%': '200%',
       },

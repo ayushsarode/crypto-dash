@@ -7,7 +7,7 @@ import './globals.css'
 
 export default function Page() {
   return (
-    <main className="bg-black min-h-screen">
+    <main className=" min-h-screen">
       <Home />
     </main>
   );
