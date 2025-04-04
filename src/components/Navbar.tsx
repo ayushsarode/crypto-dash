@@ -7,7 +7,7 @@ import { RiCopperCoinFill } from "react-icons/ri";
 import { MdOutlineCurrencyExchange } from "react-icons/md";
 import { FaUserCircle } from "react-icons/fa";
 
-const Navbar = ({ user }) => {
+const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
