@@ -2,8 +2,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { truncateText } from "../../../lib/truncate";
-import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
-import { LoginLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import Image from "next/image";
 import { Inter, Roboto } from "next/font/google";
 import { FaCaretUp, FaCaretDown, FaExternalLinkAlt } from "react-icons/fa";
@@ -40,7 +38,6 @@ const Coin = ({ params }: any) => {
   const [timeFrame, setTimeFrame] = useState("1M"); // "24H", "7D", "1M", "3M", "1Y"
   const [currency, setCurrency] = useState("usd");
   const Coinid = params.id;
-  const { isAuthenticated, isLoading } = useKindeBrowserClient();
 
   useEffect(() => {
     const fetchCoinData = async () => {
@@ -136,7 +133,7 @@ const Coin = ({ params }: any) => {
     return value < 0 ? "text-red-500" : "text-green-500";
   };
 
-  if (isAuthenticated) {
+  
     return (
       <div className="min-h-screen bg-gradient-to-b from-black via-purple-950/20 to-black py-8 px-4">
         <Link 
@@ -376,22 +373,8 @@ const Coin = ({ params }: any) => {
         </div>
       </div>
     )
-  } else {
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-black via-purple-950/20 to-black flex justify-center items-center">
-        <div className="bg-gray-900/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-indigo-500/20 text-center max-w-md">
-          <FaInfoCircle className="text-indigo-400 text-4xl mx-auto mb-4" />
-          <h2 className="text-2xl font-bold text-white mb-4">Authentication Required</h2>
-          <p className="text-gray-300 mb-6">
-            You need to be logged in to view detailed information about this cryptocurrency.
-          </p>
-          <LoginLink className="inline-flex items-center px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-colors">
-            Log In to Continue
-          </LoginLink>
-        </div>
-      </div>
-    );
+
+    
   }
-};
 
 export default Coin;
